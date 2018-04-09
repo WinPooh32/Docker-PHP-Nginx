@@ -1,0 +1,26 @@
+version: "2"
+services:
+  tmp:
+    image: busybox
+    command: chmod -R 777 /tmp/docker
+    volumes:
+      - /tmp/docker
+
+  php:
+    image: php:7.2-fpm-alpine3.7
+    volumes:
+      - './php-fpm.d/:/usr/local/etc/php-fpm.d/:ro'
+    volumes_from:
+      - tmp
+      - nginx
+    command: php-fpm -F
+
+  nginx:
+    image: nginx:alpine
+    ports: 
+      - "8080:80"
+    volumes:
+      - ./nginx:/etc/nginx/:ro
+      - ./html/:/var/www/html/:ro
+    volumes_from:
+      - tmp
