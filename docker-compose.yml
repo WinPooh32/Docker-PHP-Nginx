@@ -2,7 +2,7 @@ version: "2"
 services:
   tmp:
     image: busybox
-    command: chmod -R 655 /tmp/docker
+    command: chmod -R 777 /tmp/docker
     volumes:
       - /tmp/docker
 
